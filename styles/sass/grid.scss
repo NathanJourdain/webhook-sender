@@ -3,7 +3,7 @@ form{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(2, auto);
-    grid-gap: 10%;
+    grid-gap: 20px;
     grid-template-areas: 'left right' 'btn btn' ;
 
     margin-top: 50px;
@@ -99,7 +99,7 @@ form .btn.add-field{
 
 form .vertical-separator{
     width: 2px;
-    height: 90%;
+    height: 80%;
     position: absolute;
     top: 50%;
     left: 50%;

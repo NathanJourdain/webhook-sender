@@ -1,0 +1,14 @@
+footer{
+    margin-top: 20px;
+    
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-blue);
+
+    a{
+        text-decoration: none;
+        color: var(--color-blue);
+        line-height: 150%;
+    }
+}
