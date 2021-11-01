@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebHook Discord Sender</title>
+
+    <link rel="stylesheet" href="styles/index.css">
+
+    <script src="scripts/index.js" defer type="module"></script>
+</head>
+<body>
+    
+    <header>
+        <h1>Webhook Discord Sender</h1>
+    </header>
+
+    <form>
+
+        <!-- Configuration principale -->
+        <section class="left">
+
+            <div class="input-container">
+                <label for="webhook-url">Webhook url</label>
+                <input type="url" name="webhook-url" id="webhook-url" placeholder="https://discord.com/api/webhooks/..." required>
+            </div>
+
+            <div class="input-container">
+                <label for="content-message">Main message</label>
+                <textarea name="content-message" id="content-message" placeholder="hello word"></textarea>
+            </div>
+        
+            <div class="btn add-embed">
+                <span>Add embed</span>
+                <img src="assets/add.svg" alt="add icon">
+            </div>
+
+        </section>
+
+
+        <!-- Configuration des embeds -->
+        <section class="right embed-config disable" data-embedID="0">
+
+            <div class="input-container">
+                <label for="title-embed">Title</label>
+                <input type="text" name="title-embed" id="title-embed">
+            </div>
+            
+            <div class="input-container">
+                <label for="description-embed">Description</label>
+                <textarea name="description-embed" id="description-embed" placeholder="hello word"></textarea>
+            </div>
+
+            <div class="input-container">
+                <label for="image-embed">Image url</label>
+                <input type="url" name="image-embed" id="image-embed">
+            </div>
+
+            <div class="input-container">
+                <label for="thumbnail-embed">Thumbnail url</label>
+                <input type="url" name="thumbnail-embed" id="thumbnail-embed">
+            </div>
+
+            <div class="input-container">
+                <label for="footer-embed">Footer</label>
+                <input type="text" name="footer-embed" id="footer-embed">
+            </div>
+
+            <div class="input-container">
+                <label for="color-embed">Color</label>
+                <input type="color" name="color-embed" id="color-embed">
+            </div>
+
+            <hr>
+
+            
+            <div class="btn add-field">
+                <span>Add field</span>
+                <img src="assets/add.svg" alt="add icon">
+            </div>
+            
+
+        </section>
+
+        <span class="vertical-separator"></span>
+
+        <button type="submit" class="btn send-webhook">Send webhook</button>
+    </form>
+
+
+</body>
+</html>
