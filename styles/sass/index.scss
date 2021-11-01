@@ -16,3 +16,13 @@ body{
     padding: 20px;
     background-color: var(--color-white);
 }
+
+
+p.description{
+    border-left: 1px solid var(--color-blue);
+    padding-left: 10px;
+    color : var(--color-gray);
+    font-size: 1.125em;
+    font-family: 'Poppins', sans-serif;
+    max-width: 600px;
+}
