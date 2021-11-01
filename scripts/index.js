@@ -75,6 +75,7 @@ const inputsEmbedConfig =[
 inputsEmbedConfig.forEach(input => {
     input.addEventListener('input', (e)=>{
         saveEmbedConfig(document.querySelector('.embed-config').getAttribute('data-embedid'));
+        console.log(embeds);
     })
 })
 
@@ -83,9 +84,7 @@ inputsEmbedConfig.forEach(input => {
  *  Save the values of embed in objects
  *  @param {integer} embedID the id of the embed to save informations 
  */
-function saveEmbedConfig(embedID){
-    const embedConfig = document.querySelector('.embed-config');
-    
+function saveEmbedConfig(embedID){    
     if(!embeds[embedID]){
         embeds[embedID] = new Embed();
     }
@@ -156,6 +155,8 @@ function createEmbed(){
  */
 function showEmbedsValues(embedID){
     const embedObject = embeds[embedID];
+    
+    document.querySelector('.embed-config').setAttribute('data-embedID', embedID);
     document.querySelector('#title-embed').value = embedObject.title ;
     document.querySelector('#description-embed').value = embedObject.description; 
     document.querySelector('#image-embed').value = embedObject.image;
