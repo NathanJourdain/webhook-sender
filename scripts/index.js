@@ -135,15 +135,17 @@ function createEmbed(){
     document.querySelector('.left').insertBefore(element ,btnAddEmbed);
 
     //update of attribute data-embedid
-    document.querySelector('.embed-config').setAttribute('data-embedID', embeds.length);
+    const embedID = embeds.length
+    document.querySelector('.embed-config').setAttribute('data-embedID', embedID);
     
     element.addEventListener('click', (e) => {
         const embedID = e.target.getAttribute('data-embed');
         resetValuesEmbed();
         showEmbedsValues(embedID);
     });
-    saveEmbedConfig(embeds.length);
+    saveEmbedConfig(embedID);
     enableEmbedConfig();
+    changeActiveEmbed(embedID);
     // Delete the button if the numbers of embed is equal to 10
     if(embeds.length == 10) btnAddEmbed.remove();
 }
@@ -170,6 +172,7 @@ function showEmbedsValues(embedID){
         element.querySelector('div:nth-of-type(2) input').value = field.value;
         element.querySelector('div:nth-of-type(3) input').checked = field.inline;
     })
+    changeActiveEmbed(embedID);
 }
 
 
@@ -243,4 +246,18 @@ function sendEmbed(){
             alert("An error has occured, check the url and insert minimum one value on each embeds");
         }
     });
+}
+
+
+/**
+ * Change the active btn embed into config
+ * @param {embedID} int
+ */
+function changeActiveEmbed(embedID){
+    const btns = [...document.querySelectorAll('.btn.show-embed')];
+    btns.forEach(btn => {
+        btn.classList.remove('active');
+        console.log(btns.indexOf(btn));
+        if(btns.indexOf(btn) == embedID) btn.classList.add('active');
+    })
 }
