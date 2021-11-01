@@ -58,12 +58,12 @@
 
             <div class="input-container">
                 <label for="title-embed">Title</label>
-                <input type="text" name="title-embed" id="title-embed">
+                <input type="text" name="title-embed" id="title-embed" maxlength="256">
             </div>
             
             <div class="input-container">
                 <label for="description-embed">Description</label>
-                <textarea name="description-embed" id="description-embed" placeholder="hello word"></textarea>
+                <textarea name="description-embed" id="description-embed" placeholder="hello word" maxlength="4096"></textarea>
             </div>
 
             <div class="input-container">
@@ -78,7 +78,7 @@
 
             <div class="input-container">
                 <label for="footer-embed">Footer</label>
-                <input type="text" name="footer-embed" id="footer-embed">
+                <input type="text" name="footer-embed" id="footer-embed" maxlength="2048">
             </div>
 
             <div class="input-container">
@@ -101,6 +101,11 @@
 
         <button type="submit" class="btn send-webhook">Send webhook</button>
     </form>
+
+    <footer>
+        <a href="https://support.discord.com/hc/fr/articles/360045093012-Server-Integrations-Page">What is webhooks ?</a>
+
+    </footer>
 
 </body>
 </html>

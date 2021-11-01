@@ -45,12 +45,12 @@ function createField(fieldID){
     element.innerHTML = `<h4>Field ${fieldID}</h4>
     <div>
         <label for="embed-field-${fieldID}-name">Name</label>
-        <input type="text" name="embed-field-${fieldID}-name" id="embed-field-${fieldID}-name" placeholder="Name">
+        <input type="text" name="embed-field-${fieldID}-name" id="embed-field-${fieldID}-name" placeholder="Name" maxlenght="256">
     </div>
 
     <div>
         <label for="embed-field-1-value">Value</label>
-        <input type="text" name="embed-field-${fieldID}-value" id="embed-field-${fieldID}-value" placeholder="Value">
+        <input type="text" name="embed-field-${fieldID}-value" id="embed-field-${fieldID}-value" placeholder="Value" maxlenght="1024">
     </div>
     
     <div>
