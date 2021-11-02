@@ -2,6 +2,7 @@ import Embed from './embed.js';
 
 
 const embeds = [];
+const embedIDsAvailable = [0,1,2,3,4,5,6,7,8,9];
 const webhookUrl = document.querySelector('#webhook-url');
 const contentMessage = document.querySelector('#content-message');
 let EMBED_CONFIG_DISABLED = true;
@@ -75,7 +76,6 @@ const inputsEmbedConfig =[
 inputsEmbedConfig.forEach(input => {
     input.addEventListener('input', (e)=>{
         saveEmbedConfig(document.querySelector('.embed-config').getAttribute('data-embedid'));
-        console.log(embeds);
     })
 })
 
@@ -85,23 +85,25 @@ inputsEmbedConfig.forEach(input => {
  *  @param {integer} embedID the id of the embed to save informations 
  */
 function saveEmbedConfig(embedID){    
-    if(!embeds[embedID]){
-        embeds[embedID] = new Embed();
+    let embedObject = embeds.filter(embed => embed.id == embedID)[0];
+    if(embedObject == undefined){
+        embedObject = new Embed(embedID);
+        embeds.push(embedObject);
     }
-    embeds[embedID].setTitle(document.querySelector('#title-embed').value);
-    embeds[embedID].setDescription(document.querySelector('#description-embed').value);
-    embeds[embedID].setImage(document.querySelector('#image-embed').value);
-    embeds[embedID].setThumbnail(document.querySelector('#thumbnail-embed').value);
-    embeds[embedID].setFooter(document.querySelector("#footer-embed").value);
-    embeds[embedID].setColor(parseInt(document.querySelector("#color-embed").value.replace("#", ""),16));
+    embedObject.setTitle(document.querySelector('#title-embed').value);
+    embedObject.setDescription(document.querySelector('#description-embed').value);
+    embedObject.setImage(document.querySelector('#image-embed').value);
+    embedObject.setThumbnail(document.querySelector('#thumbnail-embed').value);
+    embedObject.setFooter(document.querySelector("#footer-embed").value);
+    embedObject.setColor(parseInt(document.querySelector("#color-embed").value.replace("#", ""),16));
 
 
     document.querySelectorAll('.field-container').forEach((field)=> {
         const fieldID = field.getAttribute('data-fieldID');
-        if(!embeds[embedID].fields[fieldID]){
-            embeds[embedID].addField();
+        if(!embedObject.fields[fieldID]){
+            embedObject.addField();
         }
-        embeds[embedID].fields[fieldID] = {
+        embedObject.fields[fieldID] = {
             name : field.querySelector("div:nth-of-type(1) input").value,
             value : field.querySelector("div:nth-of-type(2) input").value,
             inline :    field.querySelector("div:nth-of-type(3) input").checked
@@ -128,24 +130,25 @@ function resetValuesEmbed(){
  * Create a new embed 
  */
 function createEmbed(){
+    const selectEmbedID = embedIDsAvailable.sort().shift();
+
     const element = document.createElement('div');
     element.classList = "btn show-embed";
-    element.setAttribute('data-embed', embeds.length);
-    element.innerHTML = ` <span>Show embed n°${embeds.length}</span><img src="assets/chevron.svg" alt="chevron icon">`;
+    element.setAttribute('data-embed', selectEmbedID);
+    element.innerHTML = ` <span>Show embed n°${selectEmbedID}</span><img src="assets/chevron.svg" alt="chevron icon">`;
     document.querySelector('.left').insertBefore(element ,btnAddEmbed);
 
     //update of attribute data-embedid
-    const embedID = embeds.length
-    document.querySelector('.embed-config').setAttribute('data-embedID', embedID);
+    document.querySelector('.embed-config').setAttribute('data-embedID', selectEmbedID);
     
     element.addEventListener('click', (e) => {
         const embedID = e.target.getAttribute('data-embed');
         resetValuesEmbed();
         showEmbedsValues(embedID);
     });
-    saveEmbedConfig(embedID);
+    saveEmbedConfig(selectEmbedID);
     enableEmbedConfig();
-    changeActiveEmbed(embedID);
+    changeActiveEmbed(selectEmbedID);
     // Delete the button if the numbers of embed is equal to 10
     if(embeds.length == 10) btnAddEmbed.remove();
 }
@@ -156,8 +159,9 @@ function createEmbed(){
  * @param {integer} embedID 
  */
 function showEmbedsValues(embedID){
-    const embedObject = embeds[embedID];
-    
+    const embedObject = embeds.filter(embed => embed.id == embedID)[0];
+
+
     document.querySelector('.embed-config').setAttribute('data-embedID', embedID);
     document.querySelector('#title-embed').value = embedObject.title ;
     document.querySelector('#description-embed').value = embedObject.description; 
@@ -166,7 +170,7 @@ function showEmbedsValues(embedID){
     document.querySelector("#footer-embed").value = embedObject.footer;
     document.querySelector("#color-embed").value = embedObject.color;
 
-    embeds[embedID].fields.forEach((field, index) => {
+    embedObject.fields.forEach((field, index) => {
         const element = createField(index);
         element.querySelector('div:nth-of-type(1) input').value = field.name;
         element.querySelector('div:nth-of-type(2) input').value = field.value;
@@ -213,12 +217,12 @@ function sendEmbed(){
     data.embeds = [];
     embeds.forEach(embed => {
         let embedData = {
-                title: form.querySelector('#title-embed').value,
-                description: form.querySelector('#description-embed').value,
-                image: {url: form.querySelector('#image-embed').value},
-                thumbnail: {url: form.querySelector('#thumbnail-embed').value},
-                footer: {text: form.querySelector('#footer-embed').value},
-                color: parseInt(form.querySelector('#color-embed').value.replace("#", ""),16),
+                title: embed.title,
+                description: embed.description,
+                image: {url: embed.image},
+                thumbnail: {url: embed.thumbnail},
+                footer: {text: embed.footer},
+                color: embed.color,
                 fields: []
         }
         embed.fields.forEach(field => {
@@ -254,10 +258,29 @@ function sendEmbed(){
  * @param {embedID} int
  */
 function changeActiveEmbed(embedID){
-    const btns = [...document.querySelectorAll('.btn.show-embed')];
+    const btns = [...document.querySelectorAll('.btn.show-embed')];;
     btns.forEach(btn => {
         btn.classList.remove('active');
-        console.log(btns.indexOf(btn));
-        if(btns.indexOf(btn) == embedID) btn.classList.add('active');
     })
+    document.querySelector(`.btn.show-embed[data-embed="${embedID}"]`).classList.add('active');
 }
+
+
+/**
+ * Button delete embed
+ */
+document.querySelector('.btn.delete-embed').addEventListener('click', ()=>{
+    const embedID =  document.querySelector('.embed-config').getAttribute('data-embedID');
+    embeds.splice(embedID,1);
+    document.querySelector(`.btn.show-embed[data-embed="${embedID}"]`).remove();
+    if(embeds.length == 0){disableEmbedConfig()}
+    else{
+        showEmbedsValues(0);
+        changeActiveEmbed(0);
+        embedIDsAvailable.push(parseInt(embedID));
+        console.log(embedIDsAvailable);
+    }
+
+    
+
+});

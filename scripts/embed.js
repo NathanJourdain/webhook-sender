@@ -1,6 +1,7 @@
 export default class Embed{
 
-    constructor(){
+    constructor(id){
+        this.id = id;
         this.title = "";
         this.description = "";
         this.image = "";

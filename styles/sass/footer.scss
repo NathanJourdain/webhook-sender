@@ -2,13 +2,35 @@ footer{
     margin-top: 20px;
     
     text-align: center;
+    align-items: center;
     display: flex;
     flex-direction: column;
     border-top: 1px solid var(--color-blue);
 
     a{
         text-decoration: none;
-        color: var(--color-blue);
+        color: var(--text-link);
+        font-size: 1.125em;
         line-height: 150%;
+        position: relative;
+        width: max-content;
+    
+        &:hover::before{
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text-link);
+            animation: scaling 0.4s forwards;
+            
+            @keyframes scaling {
+                to{width: 100%;}
+            }
+        }
+
+        
     }
+
 }
