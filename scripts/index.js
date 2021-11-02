@@ -278,7 +278,6 @@ document.querySelector('.btn.delete-embed').addEventListener('click', ()=>{
         showEmbedsValues(0);
         changeActiveEmbed(0);
         embedIDsAvailable.push(parseInt(embedID));
-        console.log(embedIDsAvailable);
     }
 
     
