@@ -19,6 +19,9 @@ form > .left{
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: var(--color-gray);
+    padding: 10px;
+    border-radius: 5px;
 }
 
 form .input-container{
@@ -38,8 +41,9 @@ form .input-container label{
 }
 form .input-container input,
 form .input-container textarea{
-    border: 1px solid var(--color-blue);
-    background-color: var(--color-white);
+    border: 1px solid #000;
+    background-color: var(--color-black);
+    color: var(--color-white);
     border-radius: 5px;
     padding: 5px;
     font-family: 'Poppins', sans-serif;
@@ -99,7 +103,8 @@ form .field-container label{
 }
 form .field-container input{
     padding: 5px;
-    border: 1px solid var(--color-blue);
+    border: 1px solid #000;
+    background-color: var(--color-black);
     border-radius: 5px;
     margin-bottom: 5px;
 }
